@@ -6,7 +6,7 @@
 - [x] PROMPT 1: Estrutura Base do Projeto
 - [x] PROMPT 2: Layout Desktop e Sidebar
 - [x] PROMPT 3: Header Mobile e Navegação
-- [ ] PROMPT 4: Dashboard - Cards e Gráficos
+- [x] PROMPT 4: Dashboard - Cards e Gráficos
 - [ ] PROMPT 5: Dashboard - Lista de Transações Recentes
 - [ ] PROMPT 6: Página de Cartões
 - [ ] PROMPT 7: Página de Transações
@@ -28,7 +28,7 @@
 
 ## 📋 PROMPT 1: Estrutura Base do Projeto
 
-**Status:** ✅ Concluído | **Data:** 2025-01-18 | **Build:** ✅ Sucesso (2 tentativas)
+**Status:** ✅ Concluído | **Data:** 2025-01-18 | **Build:** ✅ Sucesso (2 tentativas) | **Commit:** `5cd6726`
 
 ### Implementado
 - Projeto Vite + React + TypeScript inicializado
@@ -64,7 +64,7 @@
 
 ## 📋 PROMPT 2: Layout Desktop e Sidebar
 
-**Status:** ✅ Concluído | **Data:** 2025-01-18 | **Build:** ✅ Sucesso
+**Status:** ✅ Concluído | **Data:** 2025-01-18 | **Build:** ✅ Sucesso | **Commit:** `5cd6726`
 
 ### Implementado
 - Layout principal com sidebar + main content
@@ -98,7 +98,7 @@
 
 ## 📋 PROMPT 3: Header Mobile e Navegação
 
-**Status:** ✅ Concluído | **Data:** 2025-01-18 | **Build:** ✅ Sucesso
+**Status:** ✅ Concluído | **Data:** 2025-01-18 | **Build:** ✅ Sucesso | **Commit:** `5cd6726`
 
 ### Implementado
 - Header Mobile renderiza apenas em <1280px
@@ -410,5 +410,48 @@ Para completar a análise do design do Figma via MCP, precisamos usar as ferrame
 
 ---
 
-**Última atualização:** 2025-01-XX  
-**Versão:** 0.1.0 (Análise inicial - aguardando acesso MCP completo)
+**Última atualização:** 2025-01-18  
+**Versão:** 0.2.0 (PROMPT 4 concluído)
+
+---
+
+## 📋 PROMPT 4: Dashboard - Cards e Gráficos
+
+**Status:** ✅ Concluído | **Data:** 2025-01-18 | **Build:** ✅ Sucesso (1 tentativa)
+
+### Implementado
+- Componente `SummaryCard` reutilizável com variantes (default, primary, success, error)
+- Componente `SummaryCards` que compõe 4 cards de resumo
+- Componente `Chart` reutilizável para gráficos
+- Componente `Charts` que compõe grid de gráficos
+- Componente `Card` compartilhado para containers
+- Formatação de moeda (R$ brasileiro)
+- Indicadores de tendência nos cards
+- Layout responsivo: 1 coluna (mobile), 2 colunas (tablet), 4 colunas (desktop)
+- Grid de gráficos: 1 coluna (mobile/tablet), 2 colunas (desktop)
+
+### Tokens Utilizados
+**Semânticas:**
+- `--color-surface`: `#FFFFFF` (background dos cards)
+- `--border-color`: `var(--gray-200)` (bordas dos cards)
+- `--color-text`: `var(--gray-900)` (texto principal)
+- `--color-text-secondary`: `var(--gray-600)` (texto secundário)
+
+**Primitivas:**
+- `--gray-200`: Bordas dos cards
+- `--gray-600`: Texto secundário e labels
+- `--gray-900`: Texto principal
+- `--lime-600`: Cor primária (saldo)
+- `--green-600`: Cor de sucesso (receitas)
+- `--red-600`: Cor de erro (despesas)
+
+**Conversões:**
+- Nenhuma (todos valores via tokens)
+
+### Arquivos Criados/Modificados
+- `src/components/shared/Card/Card.tsx`
+- `src/components/dashboard/SummaryCards/SummaryCard.tsx`
+- `src/components/dashboard/SummaryCards/SummaryCards.tsx`
+- `src/components/dashboard/Charts/Chart.tsx`
+- `src/components/dashboard/Charts/Charts.tsx`
+- `src/pages/Dashboard.tsx` (modificado)
