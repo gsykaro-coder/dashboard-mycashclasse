@@ -9,7 +9,7 @@
 - [x] PROMPT 4: Dashboard - Cards e Gráficos
 - [x] PROMPT 5: Dashboard - Lista de Transações Recentes
 - [x] PROMPT 6: Página de Cartões
-- [ ] PROMPT 7: Página de Transações
+- [x] PROMPT 7: Página de Transações
 - [ ] PROMPT 8: Página de Perfil
 
 ---
@@ -534,3 +534,44 @@ Para completar a análise do design do Figma via MCP, precisamos usar as ferrame
 - `src/components/cards/CardItem/CardItem.tsx`
 - `src/components/cards/CardList/CardList.tsx`
 - `src/pages/Cards.tsx` (modificado)
+
+---
+
+## 📋 PROMPT 7: Página de Transações
+
+**Status:** ✅ Concluído | **Data:** 2025-01-18 | **Build:** ✅ Sucesso (1 tentativa)
+
+### Implementado
+- Componente `TransactionItem` completo para lista de transações
+- Componente `TransactionList` com lista e aplicação de filtros
+- Componente `TransactionFilters` com filtros (Tipo, Categoria, Período)
+- Filtros funcionais (tipo: todos/receitas/despesas)
+- Filtro por categoria
+- Filtro por período (hoje, semana, mês, ano)
+- Estados de loading e empty
+- Botão "Nova Transação" no header
+- Layout responsivo
+- Formatação de moeda e data completa
+- Indicadores visuais por tipo (receita/despesa)
+
+### Tokens Utilizados
+**Semânticas:**
+- `--color-surface`: `#FFFFFF` (background dos cards)
+- `--border-color`: `var(--gray-200)` (bordas)
+- `--color-primary`: `var(--lime-600)` (botões)
+- `--color-text`: `var(--gray-900)` (texto principal)
+
+**Primitivas:**
+- `--gray-50`, `--gray-100`, `--gray-200`, `--gray-300`, `--gray-500`, `--gray-600`, `--gray-700`, `--gray-900`
+- `--green-50`, `--green-600` (receitas)
+- `--red-50`, `--red-600` (despesas)
+- `--lime-600`, `--lime-700` (botão primário)
+
+**Conversões:**
+- Nenhuma (todos valores via tokens)
+
+### Arquivos Criados/Modificados
+- `src/components/transactions/TransactionItem/TransactionItem.tsx`
+- `src/components/transactions/TransactionList/TransactionList.tsx`
+- `src/components/transactions/TransactionFilters/TransactionFilters.tsx`
+- `src/pages/Transactions.tsx` (modificado)
