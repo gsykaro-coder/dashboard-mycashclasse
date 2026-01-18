@@ -10,7 +10,7 @@
 - [x] PROMPT 5: Dashboard - Lista de Transações Recentes
 - [x] PROMPT 6: Página de Cartões
 - [x] PROMPT 7: Página de Transações
-- [ ] PROMPT 8: Página de Perfil
+- [x] PROMPT 8: Página de Perfil
 
 ---
 
@@ -575,3 +575,40 @@ Para completar a análise do design do Figma via MCP, precisamos usar as ferrame
 - `src/components/transactions/TransactionList/TransactionList.tsx`
 - `src/components/transactions/TransactionFilters/TransactionFilters.tsx`
 - `src/pages/Transactions.tsx` (modificado)
+
+---
+
+## 📋 PROMPT 8: Página de Perfil
+
+**Status:** ✅ Concluído | **Data:** 2025-01-18 | **Build:** ✅ Sucesso (1 tentativa)
+
+### Implementado
+- Componente `ProfileForm` com formulário de dados pessoais
+- Modo visualização e modo edição
+- Avatar do usuário (placeholder e upload futuro)
+- Campos editáveis: Nome e Email
+- Exibição de "Membro desde" (data de criação)
+- Botões de ação (Editar, Salvar, Cancelar)
+- Estados de loading/saving
+- Validação de campos obrigatórios
+- Layout responsivo
+- Touch targets adequados (min-height: 48px)
+
+### Tokens Utilizados
+**Semânticas:**
+- `--color-surface`: `#FFFFFF` (background do card)
+- `--border-color`: `var(--gray-200)` (bordas)
+- `--color-primary`: `var(--lime-600)` (botões primários)
+- `--color-text`: `var(--gray-900)` (texto principal)
+- `--color-text-secondary`: `var(--gray-600)` (texto secundário)
+
+**Primitivas:**
+- `--gray-100`, `--gray-200`, `--gray-300`, `--gray-600`, `--gray-700`, `--gray-900`
+- `--lime-600`, `--lime-700` (botão primário)
+
+**Conversões:**
+- Nenhuma (todos valores via tokens)
+
+### Arquivos Criados/Modificados
+- `src/components/profile/ProfileForm/ProfileForm.tsx`
+- `src/pages/Profile.tsx` (modificado)
