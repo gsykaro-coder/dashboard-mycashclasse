@@ -2,12 +2,15 @@ import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import SidebarItem from './SidebarItem'
 import SidebarToggle from './SidebarToggle'
+import SidebarLogo from './SidebarLogo'
+import SidebarSearch from './SidebarSearch'
+import SidebarProfile from './SidebarProfile'
+import IconHome from '../../icons/IconHome'
+import IconCard from '../../icons/IconCard'
 
 const navigation = [
-  { path: '/', label: 'Dashboard', icon: '📊' },
-  { path: '/cards', label: 'Cartões', icon: '💳' },
-  { path: '/transactions', label: 'Transações', icon: '💰' },
-  { path: '/profile', label: 'Perfil', icon: '👤' },
+  { path: '/', label: 'Home', icon: IconHome },
+  { path: '/cards', label: 'cartões', icon: IconCard },
 ]
 
 export default function Sidebar() {
@@ -22,19 +25,22 @@ export default function Sidebar() {
         ${isExpanded ? 'w-64' : 'w-20'}
       `}
     >
-      {/* Logo */}
+      {/* Logo Section */}
       <div className="flex items-center justify-between p-4 border-b border-gray-200">
-        {isExpanded && (
-          <h1 className="text-xl font-bold text-gray-900">mycash+</h1>
-        )}
+        <SidebarLogo isExpanded={isExpanded} />
         <SidebarToggle
           isExpanded={isExpanded}
           onToggle={() => setIsExpanded(!isExpanded)}
         />
       </div>
 
+      {/* Search */}
+      <div className="p-4 border-b border-gray-200">
+        <SidebarSearch isExpanded={isExpanded} />
+      </div>
+
       {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-2">
+      <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
         {navigation.map((item) => (
           <SidebarItem
             key={item.path}
@@ -46,6 +52,11 @@ export default function Sidebar() {
           />
         ))}
       </nav>
+
+      {/* Profile Section */}
+      <div className="p-4 border-t border-gray-200">
+        <SidebarProfile isExpanded={isExpanded} />
+      </div>
     </aside>
   )
 }

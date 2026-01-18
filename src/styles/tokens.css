@@ -18,7 +18,19 @@
   --gray-800: #262626;
   --gray-900: #171717;
   
-  /* Lime Scale (Primary) */
+  /* Orange Scale (Primary - conforme Figma) */
+  --orange-50: #FFF7ED;
+  --orange-100: #FFEDD5;
+  --orange-200: #FED7AA;
+  --orange-300: #FDBA74;
+  --orange-400: #FB923C;
+  --orange-500: #F97316;
+  --orange-600: #EA580C;
+  --orange-700: #C2410C;
+  --orange-800: #9A3412;
+  --orange-900: #7C2D12;
+  
+  /* Lime Scale (Secondary - mantido para compatibilidade) */
   --lime-50: #F7FEE7;
   --lime-100: #ECFCCB;
   --lime-200: #D9F99D;
@@ -49,9 +61,10 @@
      ============================================ */
   
   /* Cores Semânticas */
-  --color-primary: var(--lime-500);
-  --color-primary-hover: var(--lime-600);
-  --color-primary-light: var(--lime-100);
+  --color-primary: var(--orange-500);
+  --color-primary-hover: var(--orange-600);
+  --color-primary-light: var(--orange-100);
+  --color-primary-dark: var(--orange-700);
   
   --color-secondary: var(--gray-600);
   --color-secondary-hover: var(--gray-700);
