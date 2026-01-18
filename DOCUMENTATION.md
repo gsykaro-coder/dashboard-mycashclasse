@@ -7,7 +7,7 @@
 - [x] PROMPT 2: Layout Desktop e Sidebar
 - [x] PROMPT 3: Header Mobile e Navegação
 - [x] PROMPT 4: Dashboard - Cards e Gráficos
-- [ ] PROMPT 5: Dashboard - Lista de Transações Recentes
+- [x] PROMPT 5: Dashboard - Lista de Transações Recentes
 - [ ] PROMPT 6: Página de Cartões
 - [ ] PROMPT 7: Página de Transações
 - [ ] PROMPT 8: Página de Perfil
@@ -455,3 +455,45 @@ Para completar a análise do design do Figma via MCP, precisamos usar as ferrame
 - `src/components/dashboard/Charts/Chart.tsx`
 - `src/components/dashboard/Charts/Charts.tsx`
 - `src/pages/Dashboard.tsx` (modificado)
+
+---
+
+## 📋 PROMPT 5: Dashboard - Lista de Transações Recentes
+
+**Status:** ✅ Concluído | **Data:** 2025-01-18 | **Build:** ✅ Sucesso (1 tentativa)
+
+### Implementado
+- Componente `RecentTransactionItem` para exibir transação individual
+- Componente `RecentTransactions` com lista de até 5 transações recentes
+- Formatação de moeda brasileira (R$)
+- Formatação de data (dia e mês)
+- Indicadores visuais por tipo (receita/despesa)
+- Estados de loading e empty
+- Link "Ver todas" para página de transações
+- Layout responsivo com hover states
+- Integração com Dashboard (grid lado a lado com gráficos)
+
+### Tokens Utilizados
+**Semânticas:**
+- `--color-surface`: `#FFFFFF` (background do card)
+- `--border-color`: `var(--gray-200)` (bordas)
+- `--color-text`: `var(--gray-900)` (texto principal)
+- `--color-text-secondary`: `var(--gray-600)` (texto secundário)
+
+**Primitivas:**
+- `--gray-50`: Background hover e estados
+- `--gray-100`: Divisores entre itens
+- `--gray-200`: Bordas
+- `--gray-500`: Texto secundário
+- `--gray-900`: Texto principal
+- `--green-600`: Cor para receitas
+- `--red-600`: Cor para despesas
+- `--lime-600`: Cor do link "Ver todas"
+
+**Conversões:**
+- Nenhuma (todos valores via tokens)
+
+### Arquivos Criados/Modificados
+- `src/components/dashboard/RecentTransactions/RecentTransactionItem.tsx`
+- `src/components/dashboard/RecentTransactions/RecentTransactions.tsx`
+- `src/pages/Dashboard.tsx` (modificado - integração)

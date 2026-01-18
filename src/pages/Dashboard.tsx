@@ -1,5 +1,6 @@
 import SummaryCards from '../components/dashboard/SummaryCards/SummaryCards'
 import Charts from '../components/dashboard/Charts/Charts'
+import RecentTransactions from '../components/dashboard/RecentTransactions/RecentTransactions'
 
 export default function Dashboard() {
   return (
@@ -11,9 +12,10 @@ export default function Dashboard() {
       {/* Summary Cards */}
       <SummaryCards />
 
-      {/* Gráficos */}
-      <div className="mt-6 md:mt-8 w-full">
+      {/* Gráficos e Transações Recentes */}
+      <div className="mt-6 md:mt-8 grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
         <Charts />
+        <RecentTransactions />
       </div>
     </div>
   )
