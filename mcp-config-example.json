@@ -1,0 +1,16 @@
+{
+  "mcp": {
+    "servers": {
+      "figma": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "@modelcontextprotocol/server-figma"
+        ],
+        "env": {
+          "FIGMA_ACCESS_TOKEN": "SUBSTITUA_PELO_SEU_TOKEN_DO_FIGMA"
+        }
+      }
+    }
+  }
+}
