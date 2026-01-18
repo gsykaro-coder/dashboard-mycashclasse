@@ -1,32 +1,34 @@
 import { useState, useEffect } from 'react'
-import { User } from '../../../types'
+import { useAuth } from '../../../context/AuthContext'
 
 export default function ProfileForm() {
-  const [user, setUser] = useState<User>({
-    id: '1',
-    name: 'Usuário',
-    email: 'usuario@email.com',
-    avatar: '',
-    createdAt: new Date().toISOString(),
-  })
+  const { userProfile, updateProfile } = useAuth()
+  const [name, setName] = useState(userProfile?.name || '')
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(userProfile?.avatar_url || null)
 
   const [isEditing, setIsEditing] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
-    // TODO: Buscar dados do usuário do Supabase
-    // Por enquanto, dados mockados
-  }, [])
+    if (userProfile) {
+      setName(userProfile.name)
+      setAvatarUrl(userProfile.avatar_url ?? null)
+    }
+  }, [userProfile])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSaving(true)
 
-    // TODO: Salvar dados no Supabase
-    setTimeout(() => {
-      setIsSaving(false)
+    const { error } = await updateProfile({
+      name,
+      avatar_url: avatarUrl,
+    })
+
+    if (!error) {
       setIsEditing(false)
-    }, 1000)
+    }
+    setIsSaving(false)
   }
 
   const handleCancel = () => {
@@ -41,10 +43,10 @@ export default function ProfileForm() {
         <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-8 pb-8 border-b border-gray-200">
           <div className="relative">
             <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-              {user.avatar ? (
+              {userProfile?.avatar_url ? (
                 <img
-                  src={user.avatar}
-                  alt={user.name}
+                  src={userProfile.avatar_url}
+                  alt={userProfile.name}
                   className="w-full h-full object-cover"
                 />
               ) : (
@@ -55,10 +57,10 @@ export default function ProfileForm() {
 
           <div className="flex-1 text-center md:text-left">
             <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
-              {user.name}
+              {userProfile?.name || 'Usuário'}
             </h2>
             <p className="text-sm md:text-base text-gray-600 mb-4">
-              {user.email}
+              {userProfile?.email || ''}
             </p>
             <button
               onClick={() => setIsEditing(true)}
@@ -75,14 +77,14 @@ export default function ProfileForm() {
             <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1">
               Nome
             </label>
-            <p className="text-sm md:text-base text-gray-900">{user.name}</p>
+            <p className="text-sm md:text-base text-gray-900">{userProfile?.name || 'Usuário'}</p>
           </div>
 
           <div>
             <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1">
               Email
             </label>
-            <p className="text-sm md:text-base text-gray-900">{user.email}</p>
+            <p className="text-sm md:text-base text-gray-900">{userProfile?.email || ''}</p>
           </div>
 
           <div>
@@ -90,11 +92,11 @@ export default function ProfileForm() {
               Membro desde
             </label>
             <p className="text-sm md:text-base text-gray-900">
-              {new Intl.DateTimeFormat('pt-BR', {
+              {userProfile?.created_at ? new Intl.DateTimeFormat('pt-BR', {
                 day: '2-digit',
                 month: 'long',
                 year: 'numeric',
-              }).format(new Date(user.createdAt))}
+              }).format(new Date(userProfile.created_at)) : 'N/A'}
             </p>
           </div>
         </div>
@@ -108,10 +110,10 @@ export default function ProfileForm() {
       <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-8 pb-8 border-b border-gray-200">
         <div className="relative">
           <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-            {user.avatar ? (
+            {avatarUrl ? (
               <img
-                src={user.avatar}
-                alt={user.name}
+                src={avatarUrl}
+                alt={name}
                 className="w-full h-full object-cover"
               />
             ) : (
@@ -136,15 +138,15 @@ export default function ProfileForm() {
           >
             Nome
           </label>
-          <input
-            type="text"
-            id="name"
-            value={user.name}
-            onChange={(e) => setUser({ ...user, name: e.target.value })}
-            className="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-300 rounded-lg text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent bg-white min-h-[48px]"
-            required
-          />
-        </div>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-300 rounded-lg text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent bg-white min-h-[48px]"
+              required
+            />
+          </div>
 
         <div>
           <label
@@ -156,11 +158,11 @@ export default function ProfileForm() {
           <input
             type="email"
             id="email"
-            value={user.email}
-            onChange={(e) => setUser({ ...user, email: e.target.value })}
-            className="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-300 rounded-lg text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent bg-white min-h-[48px]"
-            required
+            value={userProfile?.email || ''}
+            disabled
+            className="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-300 rounded-lg text-sm md:text-base bg-gray-50 min-h-[48px] opacity-60 cursor-not-allowed"
           />
+          <p className="text-xs text-gray-500 mt-1">Email não pode ser alterado</p>
         </div>
 
         {/* Action Buttons */}

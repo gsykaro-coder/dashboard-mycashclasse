@@ -2,6 +2,9 @@
 /* Hierarquia: Semânticas → Primitivas → Conversão → Nunca hardcoded */
 
 :root {
+  /* Sidebar Width - Atualizada dinamicamente */
+  --sidebar-width: 256px; /* w-64 = 256px (expanded), w-20 = 80px (collapsed) */
+  
   /* ============================================
      VARIÁVEIS PRIMITIVAS (Prioridade 2)
      ============================================ */
@@ -24,11 +27,14 @@
   --orange-200: #FED7AA;
   --orange-300: #FDBA74;
   --orange-400: #FB923C;
-  --orange-500: #F97316;
+  --orange-500: #FF9D3B;
   --orange-600: #EA580C;
   --orange-700: #C2410C;
   --orange-800: #9A3412;
   --orange-900: #7C2D12;
+  
+  /* Color aliases (conforme Figma) */
+  --color-orange-500: var(--orange-500);
   
   /* Lime Scale (Secondary - mantido para compatibilidade) */
   --lime-50: #F7FEE7;
@@ -75,6 +81,7 @@
   --color-info: #3B82F6;
   
   --color-bg: var(--gray-50);
+  --color-background-background: var(--gray-100);
   --color-surface: #FFFFFF;
   --color-surface-hover: var(--gray-100);
   
@@ -84,6 +91,10 @@
   
   --border-color: var(--gray-200);
   --border-color-hover: var(--gray-300);
+  
+  /* Neutral colors (conforme Figma) */
+  --color-neutral-100: #F9FAFB;
+  --color-neutral-500: #9CA3AF;
   
   /* Espaçamentos Semânticos */
   --spacing-container: var(--spacing-lg);

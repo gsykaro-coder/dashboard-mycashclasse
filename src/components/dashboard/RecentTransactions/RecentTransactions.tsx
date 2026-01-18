@@ -1,69 +1,19 @@
-import { useEffect, useState } from 'react'
-import { Transaction } from '../../../types'
+import { useTransactions } from '../../../hooks/useTransactions'
+import { useCategories } from '../../../hooks/useCategories'
 import RecentTransactionItem from './RecentTransactionItem'
 
 export default function RecentTransactions() {
-  const [transactions, setTransactions] = useState<Transaction[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const { transactions, loading } = useTransactions({ limit: 5 })
+  const { categories } = useCategories()
 
-  useEffect(() => {
-    // TODO: Buscar transações recentes do Supabase
-    // Por enquanto, dados mockados
-    const mockTransactions: Transaction[] = [
-      {
-        id: '1',
-        description: 'Salário',
-        amount: 5000.0,
-        type: 'income',
-        category: 'Trabalho',
-        date: new Date().toISOString(),
-        createdAt: new Date().toISOString(),
-      },
-      {
-        id: '2',
-        description: 'Aluguel',
-        amount: 1200.0,
-        type: 'expense',
-        category: 'Moradia',
-        date: new Date(Date.now() - 86400000).toISOString(),
-        createdAt: new Date(Date.now() - 86400000).toISOString(),
-      },
-      {
-        id: '3',
-        description: 'Supermercado',
-        amount: 350.5,
-        type: 'expense',
-        category: 'Alimentação',
-        date: new Date(Date.now() - 172800000).toISOString(),
-        createdAt: new Date(Date.now() - 172800000).toISOString(),
-      },
-      {
-        id: '4',
-        description: 'Freelance',
-        amount: 800.0,
-        type: 'income',
-        category: 'Trabalho',
-        date: new Date(Date.now() - 259200000).toISOString(),
-        createdAt: new Date(Date.now() - 259200000).toISOString(),
-      },
-      {
-        id: '5',
-        description: 'Conta de luz',
-        amount: 150.0,
-        type: 'expense',
-        category: 'Utilidades',
-        date: new Date(Date.now() - 345600000).toISOString(),
-        createdAt: new Date(Date.now() - 345600000).toISOString(),
-      },
-    ]
+  // Mapear category_id para category name
+  const getCategoryName = (categoryId: string | null | undefined) => {
+    if (!categoryId) return undefined
+    const category = categories.find((c) => c.id === categoryId)
+    return category?.name
+  }
 
-    setTimeout(() => {
-      setTransactions(mockTransactions)
-      setIsLoading(false)
-    }, 500)
-  }, [])
-
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-200">
         <h2 className="text-base md:text-lg font-semibold text-gray-900 mb-4">
@@ -108,6 +58,7 @@ export default function RecentTransactions() {
           <RecentTransactionItem
             key={transaction.id}
             transaction={transaction}
+            categoryName={getCategoryName(transaction.category_id)}
           />
         ))}
       </div>

@@ -1,36 +1,47 @@
-import { useState, useEffect } from 'react'
-import { User } from '../../../types'
+import { useAuth } from '../../../context/AuthContext'
 
 interface SidebarProfileProps {
   isExpanded: boolean
 }
 
 export default function SidebarProfile({ isExpanded }: SidebarProfileProps) {
-  const [user] = useState<User>({
-    id: '1',
-    name: 'Gabriel Bronx',
-    email: 'gabriel.bronx@email.com',
-    avatar: '',
-    createdAt: new Date().toISOString(),
-  })
+  const { userProfile, user } = useAuth()
 
-  useEffect(() => {
-    // TODO: Buscar dados do usuário do Supabase
-    // setUser será usado quando implementarmos a integração
-  }, [])
+  // Fallback para dados mockados se não houver usuário autenticado
+  const displayName = userProfile?.name || user?.email || 'Usuário'
+  const displayEmail = userProfile?.email || user?.email || ''
+  const avatarUrl = userProfile?.avatar_url || null
+
+  // Função para tratar erro de carregamento da imagem (fallback para inicial)
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const target = e.target as HTMLImageElement
+    target.style.display = 'none'
+    const parent = target.parentElement
+    if (parent && !parent.querySelector('.avatar-fallback')) {
+      const fallback = document.createElement('div')
+      fallback.className = 'w-full h-full bg-[var(--color-primary)] flex items-center justify-center avatar-fallback'
+      fallback.innerHTML = `<span class="text-white font-semibold text-sm">${displayName.charAt(0).toUpperCase()}</span>`
+      parent.appendChild(fallback)
+    }
+  }
 
   if (!isExpanded) {
     return (
-      <div className="flex items-center justify-center p-3">
-        <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-          {user.avatar ? (
+      <div className="flex items-center justify-center">
+        <div className="w-10 h-10 rounded-full overflow-hidden">
+          {avatarUrl ? (
             <img
-              src={user.avatar}
-              alt={user.name}
+              src={avatarUrl}
+              alt={displayName}
               className="w-full h-full object-cover"
+              onError={handleImageError}
             />
           ) : (
-            <span className="text-lg">👤</span>
+            <div className="w-full h-full bg-[var(--color-primary)] flex items-center justify-center">
+              <span className="text-white font-semibold text-sm">
+                {displayName.charAt(0).toUpperCase()}
+              </span>
+            </div>
           )}
         </div>
       </div>
@@ -38,23 +49,30 @@ export default function SidebarProfile({ isExpanded }: SidebarProfileProps) {
   }
 
   return (
-    <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
-      <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-        {user.avatar ? (
+    <div className="flex items-center gap-3 rounded-lg hover:bg-[var(--color-surface-hover)] transition-colors cursor-pointer">
+      <div className="flex-shrink-0 w-10 h-10 rounded-full overflow-hidden">
+        {avatarUrl ? (
           <img
-            src={user.avatar}
-            alt={user.name}
+            src={avatarUrl}
+            alt={displayName}
             className="w-full h-full object-cover"
+            onError={handleImageError}
           />
         ) : (
-          <span className="text-lg">👤</span>
+          <div className="w-full h-full bg-[var(--color-primary)] flex items-center justify-center">
+            <span className="text-white font-semibold text-sm">
+              {displayName.charAt(0).toUpperCase()}
+            </span>
+          </div>
         )}
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-gray-900 truncate">
-          {user.name}
+        <p className="text-sm font-bold text-[var(--color-text)] truncate leading-tight">
+          {displayName}
         </p>
-        <p className="text-xs text-gray-500 truncate">{user.email}</p>
+        <p className="text-xs text-[var(--color-text-secondary)] truncate leading-tight mt-0.5">
+          {displayEmail}
+        </p>
       </div>
     </div>
   )

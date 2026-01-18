@@ -1,11 +1,14 @@
-import { Transaction } from '../../../types'
+import { Transaction, TransactionType } from '../../../types'
+import { normalizeTransactionType } from '../../../utils/typeHelpers'
 
 interface RecentTransactionItemProps {
   transaction: Transaction
+  categoryName?: string
 }
 
 export default function RecentTransactionItem({
   transaction,
+  categoryName,
 }: RecentTransactionItemProps) {
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('pt-BR', {
@@ -22,14 +25,18 @@ export default function RecentTransactionItem({
     }).format(date)
   }
 
-  const getTypeStyles = (type: 'income' | 'expense') => {
-    return type === 'income'
+  const normalizedType = normalizeTransactionType(transaction.type)
+
+  const getTypeStyles = (type: TransactionType) => {
+    const normalized = normalizeTransactionType(type)
+    return normalized === 'income'
       ? 'text-green-600 bg-green-50'
       : 'text-red-600 bg-red-50'
   }
 
-  const getTypeSign = (type: 'income' | 'expense') => {
-    return type === 'income' ? '+' : '-'
+  const getTypeSign = (type: TransactionType) => {
+    const normalized = normalizeTransactionType(type)
+    return normalized === 'income' ? '+' : '-'
   }
 
   return (
@@ -44,7 +51,7 @@ export default function RecentTransactionItem({
           `}
         >
           <span className="text-lg md:text-xl">
-            {transaction.type === 'income' ? '📈' : '📉'}
+            {normalizedType === 'income' ? '📈' : '📉'}
           </span>
         </div>
 
@@ -54,10 +61,14 @@ export default function RecentTransactionItem({
             {transaction.description}
           </p>
           <div className="flex items-center gap-2 mt-1">
-            <span className="text-xs md:text-sm text-gray-500">
-              {transaction.category}
-            </span>
-            <span className="text-gray-300">•</span>
+            {categoryName && (
+              <>
+                <span className="text-xs md:text-sm text-gray-500">
+                  {categoryName}
+                </span>
+                <span className="text-gray-300">•</span>
+              </>
+            )}
             <span className="text-xs md:text-sm text-gray-500">
               {formatDate(transaction.date)}
             </span>
@@ -70,11 +81,11 @@ export default function RecentTransactionItem({
         <p
           className={`
             text-sm md:text-base font-semibold
-            ${transaction.type === 'income' ? 'text-green-600' : 'text-red-600'}
+            ${normalizedType === 'income' ? 'text-green-600' : 'text-red-600'}
           `}
         >
           {getTypeSign(transaction.type)}
-          {formatCurrency(Math.abs(transaction.amount))}
+          {formatCurrency(Math.abs(Number(transaction.amount)))}
         </p>
       </div>
     </div>
